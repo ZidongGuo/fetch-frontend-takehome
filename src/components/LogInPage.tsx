@@ -1,31 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LogInPage.css';
-import { login, get_dogbreeds } from '../utils/api';
+import { login, get_dogbreeds, get_dogsinfo } from '../utils/api';
+import {QueryParameters} from '../utils/interface'
 
 const LogInPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('Username:', username);
     console.log('Email:', email);
     login(username,email)
-    get_dogbreeds()
+    // get_dogbreeds()
+    // const emptyQueryParameters: QueryParameters = {
+    //   breeds: ['Golden Retriever', 'Gordon Setter'],
+    //   zipCodes: null,
+    //   ageMin: null,
+    //   ageMax: null,
+    //   size: undefined,
+    //   from: undefined,
+    //   sort: undefined,
+    // };
+    // get_dogsinfo(emptyQueryParameters);
+    navigate('/home')
+
   };
 
   return (
     <div className="LogInPage">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>Find your next companion</h2>
+        <h3>Find your next furry friend</h3>
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
