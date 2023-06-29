@@ -10,6 +10,21 @@ export interface QueryParameters {
     ageMax: null | string;
     size?: null | number;
     from?: null | number;
-    sort?: 'asc' | 'desc';
+    sort?: null | string
 }
 
+export interface Dog {
+	id: string;
+	img: string;
+	name: string;
+	age: number;
+	zip_code: string;
+	breed: string;
+}
+
+export interface pageInfo {
+    count: number;
+    from: number;
+    to: number;
+    idsinpage: 25;
+}

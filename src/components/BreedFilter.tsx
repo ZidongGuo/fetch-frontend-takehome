@@ -5,12 +5,14 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { login, get_dogbreeds, get_dogsinfo } from '../utils/api';
 
+interface BreedFilterProps {
+  onBreedChange: (breed: string | null) => void;
+}
 
-
-
-export default function BreedFilter() {
-  const [dogbreedList, setDogbreedList] = React.useState<string[]>([]);
+export default function BreedFilter({ onBreedChange }: BreedFilterProps) {
+  const [dogbreedList, setDogbreedList] = React.useState<string[] | null>(null);
   const [breed, setBreed] = React.useState<string | null>();
+
   React.useEffect(() => {
     async function fetchDogBreeds() {
       try {
@@ -24,21 +26,25 @@ export default function BreedFilter() {
     fetchDogBreeds();
   }, []);
 
+  React.useEffect(() => {
+    if (breed) {
+      // Pass the selected breed to the parent component
+      onBreedChange(breed);
+    }
+  }, [breed, onBreedChange]);
+
   return (
     <div>
-        <Autocomplete
-            disablePortal
-            value={breed}
-            onChange={(event: any, newValue: string | null) => {
-            setBreed(newValue);
-            }}
-            //id="combo-box-demo"
-            options={dogbreedList}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Select your favorite dog breed" />}
-        />
+      <Autocomplete
+        disablePortal
+        value={breed}
+        onChange={(event: any, newValue: string | null) => {
+          setBreed(newValue);
+        }}
+        options={dogbreedList || []}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Select your favorite dog breed" />}
+      />
     </div>
   );
 }
-const breed ='golden'
-export {breed}

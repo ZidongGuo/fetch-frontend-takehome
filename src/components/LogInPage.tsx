@@ -1,8 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LogInPage.css';
-import { login, get_dogbreeds, get_dogsinfo } from '../utils/api';
+import { login, get_dogbreeds, get_dogsinfo, post_dogs } from '../utils/api';
 import {QueryParameters} from '../utils/interface'
+import axios, { AxiosResponse } from 'axios';
 
 const LogInPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -19,12 +20,20 @@ const LogInPage: React.FC = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Username:', username);
-    console.log('Email:', email);
-    login(username,email)
-    // get_dogbreeds()
+    //console.log('Username:', username);
+    //console.log('Email:', email);
+    login(username, email)
+    .then((res) => {
+      if (res && res.status === 200) {
+        navigate('/home');
+      }
+      else{
+        console.log('Log in failed, try again');
+        navigate('/')
+      }
+    })
     // const emptyQueryParameters: QueryParameters = {
-    //   breeds: ['Golden Retriever', 'Gordon Setter'],
+    //   breeds: ['Golden Retriever'],
     //   zipCodes: null,
     //   ageMin: null,
     //   ageMax: null,
@@ -33,7 +42,8 @@ const LogInPage: React.FC = () => {
     //   sort: undefined,
     // };
     // get_dogsinfo(emptyQueryParameters);
-    navigate('/home')
+    // post_dogs(['VnGFTIcBOvEgQ5OCx7Iu','WHGFTIcBOvEgQ5OCx7Iu'])
+
 
   };
 
@@ -61,7 +71,7 @@ const LogInPage: React.FC = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button>Login</button>
       </form>
     </div>
   );

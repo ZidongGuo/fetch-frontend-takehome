@@ -24,7 +24,7 @@ export default function SortFilter({ onSortMethodChange }: SortFilterProps) {
       }}
       options={sortOptions}
       sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="sorted alphabetically" />}
+      renderInput={(params) => <TextField {...params} label="Sorting Order" />}
     />
   );
 }
