@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 import BreedFilter from './BreedFilter';
 import SortFilter from './SortFilter';
-import DogInfoCard from './DogInfoCard'
+
 // import Grid from '@mui/material/Unstable_Grid2';
-import {Box, Grid} from '@mui/material'
+import {Box, Grid, Button} from '@mui/material'
 
 
 interface FilterPanelProps {
-  onApplyFilters: (filters: { breed: string; sort: string }) => void;
+  onApplyFilters: (filters: { breed: string | null; sort: string | null }) => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilters }) => {
-//const FilterPanel: React.FC= () => {
 
     const [sortMethod, setSortMethod] = useState<string | null>('breed:asc');
     const [breed, setBreed] = useState<string | null>(null);
 
     const handleSortMethodChange = (sortMethod: string | null) => {
+      if (!sortMethod){
+        setSortMethod('breed:asc');
+      }  
+      else{
         setSortMethod('breed:'+sortMethod);
+      }
     };
     const handleBreedChange = (breed: string | null) => {
         setBreed(breed);
     };
 
     const applyFilters =() =>{
-      onApplyFilters({ breed: breed || '', sort: sortMethod || '' });
+      onApplyFilters({ breed: breed , sort: sortMethod  });
     }
   return (
     <div>
@@ -38,7 +42,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilters }) => {
             <SortFilter onSortMethodChange={handleSortMethodChange}/>
           </Grid>
           <Grid item xs="auto">
-            <button onClick={applyFilters}>Apply Filters</button>
+            <Button onClick={applyFilters}>Search</Button>
           </Grid>
         </Grid>
       </Box>

@@ -13,26 +13,22 @@ import {Dog} from '../utils/interface'
 
 interface DogInfoCardProps {
   dogInfo: Dog;
+  toggleFavorite: (dogId: string) => void;
+  FavoriteDogs: string[];
 }
 
-export default function DogInfoCard({dogInfo}:DogInfoCardProps) {
+export default function DogInfoCard({dogInfo, toggleFavorite, FavoriteDogs}:DogInfoCardProps){
 
-    // const dogInfo= {
-    //   id: '1',
-	  //   img: 'https://frontend-take-home.fetch.com/dog-images/n02099601-golden_retriever/n02099601_100.jpg',
-	  //   name: 'Strawberry',
-	  //   age: '10',
-	  //   zipcode: '91108',
-	  //   breed: 'Golden'
-    // };
-    const [flag, setFlag] = React.useState(true);
-
-    const handleClick = () => {
-      setFlag(!flag);
-    };
     if (!dogInfo) {
       return null; // Render nothing if dogInfo is undefined
     }
+
+    const isFavorite = FavoriteDogs.includes(dogInfo.id);
+
+    const handleClick = () => {
+      toggleFavorite(dogInfo.id);
+    };
+
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -44,7 +40,6 @@ export default function DogInfoCard({dogInfo}:DogInfoCardProps) {
         //objectFit: "contain"
         sx={{ height: 270, width: 310, objectFit: "cover" }}
         image={dogInfo.img}
-        alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body1" color="text.secondary">
@@ -56,7 +51,7 @@ export default function DogInfoCard({dogInfo}:DogInfoCardProps) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton onClick={handleClick} color={flag ? 'default': 'error'} aria-label="add to favorites">
+        <IconButton onClick={handleClick} color={isFavorite ? 'error': 'default'} aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
       </CardActions>

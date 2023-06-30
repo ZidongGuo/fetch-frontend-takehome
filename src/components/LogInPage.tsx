@@ -25,26 +25,13 @@ const LogInPage: React.FC = () => {
     login(username, email)
     .then((res) => {
       if (res && res.status === 200) {
-        navigate('/home');
+        navigate('/home', { state: { username } });
       }
       else{
         console.log('Log in failed, try again');
         navigate('/')
       }
     })
-    // const emptyQueryParameters: QueryParameters = {
-    //   breeds: ['Golden Retriever'],
-    //   zipCodes: null,
-    //   ageMin: null,
-    //   ageMax: null,
-    //   size: undefined,
-    //   from: undefined,
-    //   sort: undefined,
-    // };
-    // get_dogsinfo(emptyQueryParameters);
-    // post_dogs(['VnGFTIcBOvEgQ5OCx7Iu','WHGFTIcBOvEgQ5OCx7Iu'])
-
-
   };
 
   return (

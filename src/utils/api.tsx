@@ -11,8 +11,8 @@ export const login =  async (name:string, email:string) => {
       const response: AxiosResponse = await axios.post(`${BASE_URL}/auth/login`, body, {
         withCredentials: true, 
       });  
-        // console.log('Successfully logged in!');
-        // console.log('Response:', response.data);
+        console.log('Successfully logged in!');
+        //console.log('Response:', response.data);
       return response
     } catch (error) {
       console.error('Login failed: ', error);
@@ -23,7 +23,7 @@ export const logout = async () =>{
     try {
         const response: AxiosResponse = await axios.post(`${BASE_URL}/auth/logout`);
         console.log('Successfully logged out');
-        console.log('Response:', response.data);
+        //console.log('Response:', response.data);
     } catch (error) {
       console.error('Logout failed: ', error);
     }
@@ -50,6 +50,16 @@ export const get_dogsinfo = async  (Queryparams: QueryParameters) =>{
 
 }
 
+export const get_moredogsinfo = async  (url:string) =>{
+  try {
+    const response: AxiosResponse = await axios.get(`${BASE_URL}${url}`, { withCredentials: true})
+    return response.data
+  } catch (error) {
+    console.error('get_moredogsinfo() failed: ', error);
+  }
+
+}
+
 export const post_dogs = async  (Dogids: string[]) =>{
   // if (Dogids.length > 100) {
   //   throw new Error("Too many Dogids. The list should have no more than 100 strings.");
@@ -62,3 +72,16 @@ export const post_dogs = async  (Dogids: string[]) =>{
     console.error('post_dogs() failed: ', error);
   }
 }
+
+export const matchDog =  async (FavoriteDogs: string[]) =>{
+  try {
+    const response: AxiosResponse<string> = await axios.post(`${BASE_URL}/dogs/match`, FavoriteDogs, { withCredentials: true})
+    console.log("match result: ", response.data)
+    return response.data
+  } catch (error) {
+    console.error('matchDog() failed: ', error);
+  }
+}
+
+
+
