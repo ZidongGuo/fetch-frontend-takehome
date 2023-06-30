@@ -1,42 +1,47 @@
 
 # Fetch Frontend Takehome Exercise
 
-Website hosted with Netlify [LINK] (https://649e8b9c789c3048d3ffd550--thriving-caramel-a4dfda.netlify.app/)
+### Website hosted with Netlify [LINK](https://649e8b9c789c3048d3ffd550--thriving-caramel-a4dfda.netlify.app/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## To Run Locally
 
-1. Clone the repo repository with
+## Installation and Local Setup
 
-```bash
-    git clone https://github.com/ZidongGuo/fetch-frontend-takehome.git
-```
-
-2. CD to the corresponding file directory for instance:
+1. Clone the repository with
 
 ```bash
     git clone https://github.com/ZidongGuo/fetch-frontend-takehome.git
 ```
 
-3. Install neccessory dependencies with
+2. CD to the corresponding file directory:
+
+```bash
+    cd fetch-frontend-takehome
+```
+
+3. Install neccessory dependencies with: 
 
 ```bash
     npm install
 ```
 
-4. Runs the app in the development mode with 
+4. Run the app in the development mode with: 
 
 ```bash
     npm start
 ```
 
-5. The local React website will automatically pop up in the browser. If not, open [http://localhost:3000](http://localhost:3000)
+5. The local React website will automatically pop up in the browser. If not, access:
+
+```bash
+    [http://localhost:3000](http://localhost:3000)
+```
 
 
 ## Other Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can also run:
 
 ### `npm test`
 
