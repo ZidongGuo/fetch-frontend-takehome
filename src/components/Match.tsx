@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import FilterPanel from './FilterPanel';
-import DogInfoCard from './DogInfoCard';
-import {QueryParameters, PageInfo} from '../utils/interface';
-import {Box, Grid, Pagination, Stack, Button, Typography } from '@mui/material';
-import {get_dogsinfo,get_moredogsinfo, post_dogs, matchDog } from '../utils/api';
+import {Box, Grid, Button, Typography } from '@mui/material';
+import {post_dogs, matchDog } from '../utils/api';
 import {Dog} from '../utils/interface';
 import Headerbar from './Headerbar'
 import Card from '@mui/material/Card';
@@ -21,7 +18,7 @@ const Match: React.FC=()=>{
     const [MatchedDog, setMatchedDog] = useState<Dog>();
     const navigate = useNavigate();
     const goBack = ()=>{
-        navigate('/Home')
+        navigate('/Home', { state: { username } })
     }
 
     useEffect(() => {
@@ -50,10 +47,10 @@ const Match: React.FC=()=>{
         <div>
             <Headerbar userName={username}/>
             <Typography variant="h5" align="center">
-                Voilà! Here is your matched friend based on your favorites
+                Voilà! Here is your matched new friend
             </Typography>
             <Typography variant="body1" align="center">
-                You can generate new match by changing favorites
+                generate better match by changing favorites
             </Typography>
             <br/>
             <br/>

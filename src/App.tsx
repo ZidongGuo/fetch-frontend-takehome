@@ -1,7 +1,6 @@
-import React, { useState, useEffect, ChangeEvent} from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LogInPage from './components/LogInPage';
-import userEvent from '@testing-library/user-event';
 import Home from './components/Home';
 import Match from './components/Match';
 import FavoriteDogsContext from './utils/FavoriteDogsContext';

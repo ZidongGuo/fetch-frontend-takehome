@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FilterPanel from './FilterPanel';
 import DogInfoCard from './DogInfoCard';
-import {QueryParameters, PageInfo} from '../utils/interface';
-import {Box, Grid, Pagination, Stack, Button, Typography } from '@mui/material';
+import {QueryParameters} from '../utils/interface';
+import {Box, Grid, Button, Typography } from '@mui/material';
 import {get_dogsinfo,get_moredogsinfo, post_dogs, matchDog } from '../utils/api';
 import {Dog} from '../utils/interface';
 import './Home.css';
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
     //   }));
     // };
 
-    const handleApplyFilters = (filters: { breed: string | null; sort: string | null }) => {
+    const handleApplyFilters = (filters: { breed: string | null; sortby: string | null; sort: string | null }) => {
       if (filters.breed){
         updateQuery({
           breeds: [filters.breed]
@@ -72,16 +72,32 @@ const Home: React.FC = () => {
           breeds: null
         })
       }
-      if (filters.sort){
-        updateQuery({
-          sort: filters.sort
-        })
+      if (filters.sortby){
+        if (filters.sort){
+          updateQuery({sort: filters.sortby+":"+filters.sort})
+        }
+        else{
+          updateQuery({sort: filters.sortby+":asc"})
+        }
       }
       else{
-        updateQuery({
-          sort: 'breed:asc'
-        })
+        if (filters.sort){
+          updateQuery({sort: "breed:"+filters.sort})
+        }
+        else{
+          updateQuery({sort: "breed:asc"})
+        }
       }
+      // if (filters.sort){
+      //   updateQuery({
+      //     sort: filters.sort
+      //   })
+      // }
+      // else{
+      //   updateQuery({
+      //     sort: 'breed:asc'
+      //   })
+      // }
 
 
       console.log('Selected Breed:', filters.breed);

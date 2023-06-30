@@ -1,8 +1,6 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { login, get_dogbreeds, get_dogsinfo } from '../utils/api';
 
 interface BreedFilterProps {

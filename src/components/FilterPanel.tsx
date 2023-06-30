@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
 import BreedFilter from './BreedFilter';
 import SortFilter from './SortFilter';
-
-// import Grid from '@mui/material/Unstable_Grid2';
+import SortByFilter from './SortByFilter';
 import {Box, Grid, Button} from '@mui/material'
 
 
 interface FilterPanelProps {
-  onApplyFilters: (filters: { breed: string | null; sort: string | null }) => void;
+  onApplyFilters: (filters: { breed: string | null; sortby: string | null; sort: string | null }) => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilters }) => {
 
-    const [sortMethod, setSortMethod] = useState<string | null>('breed:asc');
+    const [sortMethod, setSortMethod] = useState<string | null>('asc');
     const [breed, setBreed] = useState<string | null>(null);
-
+    const [sortby, setSortBy]  = useState<string | null>(null);
+    
     const handleSortMethodChange = (sortMethod: string | null) => {
       if (!sortMethod){
-        setSortMethod('breed:asc');
+        setSortMethod('asc');
       }  
       else{
-        setSortMethod('breed:'+sortMethod);
+        setSortMethod(sortMethod);
       }
     };
     const handleBreedChange = (breed: string | null) => {
-        setBreed(breed);
+      setBreed(breed);
+    };
+    const handleSortByChange = (sortby: string | null) => {
+      setSortBy(sortby);
     };
 
     const applyFilters =() =>{
-      onApplyFilters({ breed: breed , sort: sortMethod  });
+      onApplyFilters({ breed: breed , sortby: sortby, sort: sortMethod  });
     }
   return (
     <div>
@@ -37,6 +40,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ onApplyFilters }) => {
 
           <Grid item xs="auto">
             <BreedFilter onBreedChange={handleBreedChange}/>
+          </Grid>
+          <Grid item xs="auto">
+            <SortByFilter onSortByChange={handleSortByChange}/>
           </Grid>
           <Grid item xs="auto">
             <SortFilter onSortMethodChange={handleSortMethodChange}/>

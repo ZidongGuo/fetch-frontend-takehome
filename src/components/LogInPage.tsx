@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LogInPage.css';
-import { login, get_dogbreeds, get_dogsinfo, post_dogs } from '../utils/api';
+import { login } from '../utils/api';
 import FavoriteDogsContext from '../utils/FavoriteDogsContext';
 
 const LogInPage: React.FC = () => {
