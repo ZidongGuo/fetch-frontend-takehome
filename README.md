@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Installation and Local Setup
 
-1. Clone the repository with
+1. Clone the repository: 
 
 ```bash
     git clone https://github.com/ZidongGuo/fetch-frontend-takehome.git
@@ -35,7 +35,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 5. The local React website will automatically pop up in the browser. If not, access:
 
 ```bash
-    [http://localhost:3000](http://localhost:3000)
+    http://localhost:3000
 ```
 
 
