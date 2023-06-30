@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/fetch-frontend-takehome/static/css/main.54e2d259.css",
+    "main.js": "/fetch-frontend-takehome/static/js/main.f8662273.js",
+    "static/js/787.191ee482.chunk.js": "/fetch-frontend-takehome/static/js/787.191ee482.chunk.js",
+    "index.html": "/fetch-frontend-takehome/index.html",
+    "main.54e2d259.css.map": "/fetch-frontend-takehome/static/css/main.54e2d259.css.map",
+    "main.f8662273.js.map": "/fetch-frontend-takehome/static/js/main.f8662273.js.map",
+    "787.191ee482.chunk.js.map": "/fetch-frontend-takehome/static/js/787.191ee482.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.54e2d259.css",
+    "static/js/main.f8662273.js"
+  ]
+}
