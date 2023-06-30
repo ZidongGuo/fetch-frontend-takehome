@@ -1,5 +1,14 @@
 import React from 'react';
 
-const FavoriteDogsContext = React.createContext(null);
+interface FavoriteDogsContextType {
+  FavoriteDogs: string[];
+  setFavoriteDogs: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+
+const FavoriteDogsContext = React.createContext<FavoriteDogsContextType>({
+  FavoriteDogs: [],
+  setFavoriteDogs: () => {}, 
+});
 
 export default FavoriteDogsContext;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FilterPanel from './FilterPanel';
 import DogInfoCard from './DogInfoCard';
@@ -11,18 +11,9 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
+import FavoriteDogsContext from '../utils/FavoriteDogsContext';
 
 
-// interface MatchProps {
-//     MatchedDog: Dog;
-//     username: string;
-//   }
-
-
-//export default function Match({MatchedDog, username}:MatchProps) {
-//const Match: React.FC = ({MatchedDog, username}:MatchProps) => {
-//const Match: React.FC<MatchProps> = ({MatchedDog, username}) => {
 const Match: React.FC=()=>{
     const location = useLocation();
     const { username } = location.state || { username: '' };
@@ -38,14 +29,20 @@ const Match: React.FC=()=>{
         return () => {
           document.body.style.backgroundColor = '';
         };
+       
     }, []);
-    post_dogs([MatchedDogID]).then((res2) => {
-        console.log("MatchedDog is", res2)
-        if (res2){
-            setMatchedDog(res2[0]) 
-        }
-     
-    });
+    
+    useEffect(() => {
+        post_dogs([MatchedDogID]).then((res2) => {
+            console.log("MatchedDog is", res2)
+            if (res2){
+                setMatchedDog(res2[0]) 
+            }
+         
+        });
+    }, [MatchedDogID])
+
+
     if (!MatchedDog) {
         return null; // Render nothing if dogInfo is undefined
     }

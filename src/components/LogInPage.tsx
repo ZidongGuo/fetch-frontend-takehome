@@ -1,15 +1,16 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LogInPage.css';
 import { login, get_dogbreeds, get_dogsinfo, post_dogs } from '../utils/api';
-import {QueryParameters} from '../utils/interface'
-import axios, { AxiosResponse } from 'axios';
+import FavoriteDogsContext from '../utils/FavoriteDogsContext';
 
 const LogInPage: React.FC = () => {
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
-
+  const context = useContext(FavoriteDogsContext);
+  
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
@@ -19,6 +20,7 @@ const LogInPage: React.FC = () => {
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    context.setFavoriteDogs([])
     event.preventDefault();
     //console.log('Username:', username);
     //console.log('Email:', email);

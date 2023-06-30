@@ -11,7 +11,7 @@ interface BreedFilterProps {
 
 export default function BreedFilter({ onBreedChange }: BreedFilterProps) {
   const [dogbreedList, setDogbreedList] = React.useState<string[] | null>(null);
-  const [breed, setBreed] = React.useState<string | null>();
+  const [breed, setBreed] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     async function fetchDogBreeds() {
@@ -19,7 +19,7 @@ export default function BreedFilter({ onBreedChange }: BreedFilterProps) {
         const breeds = await get_dogbreeds();
         setDogbreedList(breeds);
       } catch (error) {
-        // Handle error
+        console.log("fetchDogBreeds() failed")
       }
     }
 

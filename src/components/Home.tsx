@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FilterPanel from './FilterPanel';
 import DogInfoCard from './DogInfoCard';
@@ -9,24 +9,25 @@ import {Dog} from '../utils/interface';
 import './Home.css';
 import Headerbar from './Headerbar'
 import FavoriteDogsContext from '../utils/FavoriteDogsContext';
+
+
 const Home: React.FC = () => {
     const location = useLocation();
     const { username } = location.state || { username: '' }; // Retrieve the username from login Page
-    const [DogIDs, setDogIDs] = useState<string[]>([]);
-    const [DogsCnt, setDogsCnt] = useState<number>();
     const [Dogs, setDogs] = useState<Dog[]>([]);
-    const [Sort, setSort] = useState<string| null>('breed:asc');
     const [PrevPageURL, setPrevPageURL] =useState<string|null>();
     const [NextPageURL, setNextPageURL] =useState<string|null>();
     const [prevButton, setprevButton] =useState<boolean>(true);
     const [nextButton, setnextButton] =useState<boolean>(true);
-    const [FavoriteDogs, setFavoriteDogs] = useState<string[]>([]);
-    //const [MatchedDog, setMatchedDog] = useState<Dog[]>();
-    // const [PageCnt, setPageCnt] = useState<number>(1);
-    // const [CurrPage, setCurrPage]= useState<number>()
-    // const [pagination, setPagination] = useState<pageInfo>();
 
+
+    const context = useContext(FavoriteDogsContext);
     
+    if (!context) {
+      throw new Error("Expected context to be defined");
+    }
+  
+    const { FavoriteDogs, setFavoriteDogs } = context;
     const navigate = useNavigate();
 
     const [Query, setQuery] = useState <QueryParameters>(
@@ -41,24 +42,24 @@ const Home: React.FC = () => {
       }
     )
   
-    // const updateQuery = (partialQuery: Partial<QueryParameters>) => {
-    //   setQuery((prevQuery) => ({
-    //     ...prevQuery,
-    //     ...partialQuery,
-    //   }));
-    // };
     const updateQuery = (partialQuery: Partial<QueryParameters>) => {
       setQuery((prevQuery) => ({
         ...prevQuery,
         ...partialQuery,
-        ...(Object.keys(partialQuery).reduce((acc, key) => {
-          if (partialQuery[key as keyof QueryParameters] === null) {
-            acc[key as keyof QueryParameters] = null;
-          }
-          return acc;
-        }, {} as Partial<QueryParameters>)),
       }));
     };
+    // const updateQuery = (partialQuery: Partial<QueryParameters>) => {
+    //   setQuery((prevQuery) => ({
+    //     ...prevQuery,
+    //     ...partialQuery,
+    //     ...(Object.keys(partialQuery).reduce((acc, key) => {
+    //       if (partialQuery[key as keyof QueryParameters] === null) {
+    //         acc[key as keyof QueryParameters] = null;
+    //       }
+    //       return acc;
+    //     }, {} as Partial<QueryParameters>)),
+    //   }));
+    // };
 
     const handleApplyFilters = (filters: { breed: string | null; sort: string | null }) => {
       if (filters.breed){
@@ -114,8 +115,6 @@ const Home: React.FC = () => {
         get_dogsinfo(Query).then((res) => {
           console.log('res.resultIds: ', res.resultIds)
           if (res && res.resultIds){
-            setDogIDs(res.resultIds);
-            setDogsCnt(res.total)
             post_dogs(res.resultIds).then((res2) => {
               setDogs(res2 || []);
             });
@@ -131,7 +130,6 @@ const Home: React.FC = () => {
       get_moredogsinfo(url).then((res) => {
         console.log('res.resultIds: ', res.resultIds)
         if (res && res.resultIds){
-          setDogIDs(res.resultIds);
           post_dogs(res.resultIds).then((res2) => {
             setDogs(res2 || []);
           });
@@ -170,12 +168,6 @@ const Home: React.FC = () => {
       console.log(FavoriteDogs)
       matchDog(FavoriteDogs).then((matchres) => {
         if (matchres){
-          // post_dogs(['NXGFTIcBOvEgQ5OCx8A1']).then((matchres2) => {
-          //   if (matchres2){
-          //     console.log('matchres2[0]', matchres2[0])
-          //     setMatchedDog(matchres2 || [])
-          //   }
-          // });
           console.log("matchres：", matchres.match)
           navigate('/YourMatch', { state: { username, MatchedDogID:matchres.match } })
 
@@ -185,25 +177,6 @@ const Home: React.FC = () => {
         }
       })
     }
-    
-    // const displayMatch=()=>{
-    //   console.log(FavoriteDogs)
-    //   matchDog(FavoriteDogs).then((matchres) => {
-    //     if (matchres){
-    //       const postReponseMatch = [matchres.match]
-    //       console.log("matchres[0] is", matchres.match)
-    //       post_dogs(postReponseMatch).then((matchres2) => {
-    //         if (matchres2){
-    //           console.log('matchres2[0]', matchres2[0])
-    //           setDogs(matchres2 || []);
-    //         }
-    //       });
-    //     }
-    //     else{
-    //       console.log("failed you find your match based on your favorites")
-    //     }
-    //   })
-    // }
 
 
   return (
@@ -233,7 +206,7 @@ const Home: React.FC = () => {
           {
             Dogs.map(d =>(
               <Grid item xs="auto" key={d.id}>
-                <DogInfoCard dogInfo={d} toggleFavorite={toggleFavorite} FavoriteDogs={FavoriteDogs}/>
+                <DogInfoCard dogInfo={d} toggleFavorite={toggleFavorite} />
               </Grid>
             ))
           }

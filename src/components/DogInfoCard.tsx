@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -9,20 +9,21 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {Dog} from '../utils/interface'
-
+import FavoriteDogsContext from '../utils/FavoriteDogsContext';
 
 interface DogInfoCardProps {
   dogInfo: Dog;
   toggleFavorite: (dogId: string) => void;
-  FavoriteDogs: string[];
+  //FavoriteDogs: string[];
 }
 
-export default function DogInfoCard({dogInfo, toggleFavorite, FavoriteDogs}:DogInfoCardProps){
+export default function DogInfoCard({dogInfo, toggleFavorite}:DogInfoCardProps){
+    const { FavoriteDogs, setFavoriteDogs } = useContext(FavoriteDogsContext);
 
     if (!dogInfo) {
       return null; // Render nothing if dogInfo is undefined
     }
-
+    
     const isFavorite = FavoriteDogs.includes(dogInfo.id);
 
     const handleClick = () => {
